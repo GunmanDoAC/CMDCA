@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Entidades Registradas | C.M.D.C.A.</title>
+  <meta name="description" content="Entidades registradas no CMDCA de Laranjeiras do Sul." />
+  <style>
+    :root {
+      --azul: #009cff;
+      --texto: #111;
+      --branco: #fff;
+      --rodape: #12343d;
+      --borda: #d9dfe4;
+      --container: 860px;
+      --container-grande: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--texto);
+      background: #fff;
+      line-height: 1.45;
+      font-size: 14px;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(100% - 32px, var(--container));
+      margin-inline: auto;
+    }
+
+    .container-grande {
+      width: min(100% - 32px, var(--container-grande));
+      margin-inline: auto;
+    }
+
+    .topo {
+      background: var(--branco);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.16);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .topo__conteudo {
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 34px;
+    }
+
+    .marca {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #f11b15;
+      font-weight: 900;
+      letter-spacing: 4px;
+      font-size: 1.38rem;
+      text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.12);
+      white-space: nowrap;
+    }
+
+    .marca__logo {
+      width: 45px;
+      height: 28px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 50% 45%, #f4f7fb 0 35%, transparent 36%),
+        linear-gradient(135deg, #dce6ed, #ffffff 45%, #cbd7df);
+      border: 1px solid #d8e0e6;
+      position: relative;
+      box-shadow: inset 0 0 0 2px #fff;
+      flex: 0 0 auto;
+    }
+
+    .marca__logo::after {
+      content: "";
+      position: absolute;
+      width: 23px;
+      height: 9px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #eb3b2f, #f5cc42, #2bbf6b, #139dec);
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .menu {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      list-style: none;
+      font-size: 0.86rem;
+      color: #292a2e;
+    }
+
+    .menu li {
+      position: relative;
+    }
+
+    .menu a,
+    .menu button {
+      border: 0;
+      background: transparent;
+      font: inherit;
+      color: inherit;
+      cursor: pointer;
+      padding: 23px 8px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .menu a:hover,
+    .menu button:hover {
+      color: var(--azul);
+    }
+
+    .submenu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      min-width: 190px;
+      list-style: none;
+      background: #fff;
+      border: 1px solid #ddd;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+      padding: 8px;
+      z-index: 20;
+    }
+
+    .submenu a {
+      padding: 9px 10px;
+      display: block;
+    }
+
+    .menu li:hover .submenu {
+      display: block;
+    }
+
+    .botao-menu {
+      display: none;
+      border: 0;
+      background: transparent;
+      font-size: 1.7rem;
+      cursor: pointer;
+    }
+
+    .hero {
+      height: 210px;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      color: white;
+      background:
+        linear-gradient(rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.18)),
+        radial-gradient(circle at 8% 70%, #ffdb29 0 10%, transparent 11%),
+        radial-gradient(circle at 34% 40%, #ffdf3c 0 9%, transparent 10%),
+        radial-gradient(circle at 56% 42%, #ffcb24 0 10%, transparent 11%),
+        radial-gradient(circle at 78% 45%, #eb2635 0 9%, transparent 10%),
+        radial-gradient(circle at 94% 47%, #e9b36c 0 9%, transparent 10%),
+        repeating-linear-gradient(90deg, rgba(255,255,255,.55) 0 5px, transparent 6px 150px),
+        linear-gradient(180deg, #9de95e 0 48%, #54ba31 49% 100%);
+      background-size: cover;
+      background-position: center;
+    }
+
+    .hero h1 {
+      font-size: 2.05rem;
+      line-height: 1;
+      font-weight: 900;
+      text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.6);
+    }
+
+    .hero p {
+      font-size: 1rem;
+      font-weight: 700;
+      text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.6);
+      margin-top: 8px;
+    }
+
+    .pagina {
+      padding: 42px 0 62px;
+    }
+
+    .titulo-secao {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      margin-bottom: 70px;
+      font-size: 1.75rem;
+      font-weight: 900;
+      color: #33343a;
+      text-align: center;
+    }
+
+    .titulo-secao::before,
+    .titulo-secao::after {
+      content: "";
+      width: 70px;
+      height: 2px;
+      background: var(--azul);
+    }
+
+    .tabela-wrap {
+      overflow-x: auto;
+    }
+
+    .subtitulo-tabela {
+      font-size: 0.95rem;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+    }
+
+    th,
+    td {
+      border-top: 1px solid var(--borda);
+      padding: 13px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      font-weight: 400;
+      text-transform: uppercase;
+    }
+
+    td:first-child,
+    th:first-child {
+      width: 150px;
+    }
+
+    .formulario {
+      display: inline-block;
+      margin-top: 46px;
+      color: #111;
+      text-transform: uppercase;
+      font-size: 0.95rem;
+    }
+
+    .formulario:hover {
+      text-decoration: underline;
+    }
+
+    .rodape {
+      background: var(--rodape);
+      color: #dbe6ea;
+      padding: 44px 0 50px;
+    }
+
+    .rodape-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.85fr 1.15fr;
+      gap: 78px;
+      align-items: start;
+    }
+
+    .rodape .marca {
+      font-size: 1.1rem;
+      letter-spacing: 3px;
+      margin-bottom: 20px;
+    }
+
+    .rodape p,
+    .rodape li,
+    .rodape a {
+      color: #d4dde1;
+      font-size: 0.88rem;
+      line-height: 1.8;
+    }
+
+    .rodape h3 {
+      color: white;
+      margin-bottom: 18px;
+      font-size: 1.03rem;
+    }
+
+    .links-rodape {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px 36px;
+      list-style: none;
+    }
+
+    .contato {
+      display: grid;
+      gap: 13px;
+      list-style: none;
+    }
+
+    .contato li {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 12px;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .barra-final {
+      height: 40px;
+      background: #08aeea;
+    }
+
+    .voltar-topo {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 50%;
+      background: #08aeea;
+      color: #fff;
+      font-size: 1.4rem;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    }
+
+    @media (max-width: 900px) {
+      .topo__conteudo {
+        justify-content: space-between;
+        min-height: 64px;
+      }
+
+      .botao-menu {
+        display: block;
+      }
+
+      .menu {
+        display: none;
+        position: fixed;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: #fff;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 10px 20px 18px;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.16);
+      }
+
+      .menu.aberto {
+        display: flex;
+      }
+
+      .menu a,
+      .menu button {
+        width: 100%;
+        justify-content: space-between;
+        padding: 13px 8px;
+      }
+
+      .submenu {
+        position: static;
+        box-shadow: none;
+        border: 0;
+        padding-left: 14px;
+      }
+
+      .rodape-grid {
+        grid-template-columns: 1fr;
+        gap: 34px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .hero {
+        height: 145px;
+      }
+
+      .hero h1 {
+        font-size: 1.55rem;
+      }
+
+      .titulo-secao {
+        font-size: 1.45rem;
+        gap: 12px;
+        margin-bottom: 38px;
+      }
+
+      .titulo-secao::before,
+      .titulo-secao::after {
+        width: 44px;
+      }
+
+      td:first-child,
+      th:first-child {
+        width: 105px;
+      }
+
+      .links-rodape {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topo" id="topo">
+    <div class="container-grande topo__conteudo">
+      <a href="index.html" class="marca" aria-label="Página inicial do CMDCA">
+        <span class="marca__logo" aria-hidden="true"></span>
+        <span>C.M.D.C.A.</span>
+      </a>
+
+      <button class="botao-menu" type="button" aria-label="Abrir menu" aria-controls="menu-principal" aria-expanded="false">☰</button>
+
+      <nav aria-label="Menu principal">
+        <ul class="menu" id="menu-principal">
+          <li><a href="index.html">Início</a></li>
+          <li>
+            <button type="button">Comunicação <span>⌄</span></button>
+            <ul class="submenu">
+              <li><a href="ultimas-noticias.html">Últimas Notícias</a></li>
+              <li><a href="campanhas.html">Campanhas</a></li>
+              <li><a href="galeria-de-fotos.html">Galeria de Fotos</a></li>
+            </ul>
+          </li>
+          <li>
+            <button type="button">Institucional <span>⌄</span></button>
+            <ul class="submenu">
+              <li><a href="sobre.html">Sobre o CMDCA</a></li>
+              <li><a href="diretoria.html">Diretoria</a></li>
+              <li><a href="composicao.html">Composição</a></li>
+            </ul>
+          </li>
+          <li>
+            <button type="button">Projetos <span>⌄</span></button>
+            <ul class="submenu">
+              <li><a href="projetos-aprovados.html">Projetos Aprovados</a></li>
+              <li><a href="banco-de-projetos.html">Banco de Projetos</a></li>
+            </ul>
+          </li>
+          <li>
+            <button type="button">Documentos <span>⌄</span></button>
+            <ul class="submenu">
+              <li><a href="resolucoes.html">Resoluções</a></li>
+              <li><a href="atas.html">Atas</a></li>
+              <li><a href="conferencias-cmdca.html">Conferências</a></li>
+            </ul>
+          </li>
+          <li>
+            <button type="button">Conselho Tutelar <span>⌄</span></button>
+            <ul class="submenu">
+              <li><a href="conselho-tutelar.html">Informações</a></li>
+              <li><a href="#contato">Contato</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="titulo-hero">
+      <div>
+        <h1 id="titulo-hero">Bem Vindo ao C.M.D.C.A</h1>
+        <p>Conselho Municipal dos Direitos à Criança e ao Adolescente</p>
+      </div>
+    </section>
+
+    <section class="pagina">
+      <div class="container">
+        <h2 class="titulo-secao">Entidades Registradas</h2>
+
+        <div class="tabela-wrap">
+          <p class="subtitulo-tabela">ENTIDADES REGISTRADAS NO CMDCA – ATUALIZADO EM 10/05/2021</p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Registro</th>
+                <th>Entidade</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>001 GOV.</td><td>CENSE- Centro de Socioeducação</td></tr>
+              <tr><td>002 GOV.</td><td>Centro da Juventude</td></tr>
+              <tr><td>002</td><td>APAE- Associação de Pais e Amigos dos Excepcionais</td></tr>
+              <tr><td>003</td><td>CEMMIC-Centro de Meninas e Meninos Integrados na Comunidade</td></tr>
+              <tr><td>006</td><td>S.O.S-Serviço de Obras Sociais</td></tr>
+              <tr><td>013</td><td>IASJ- Instituto de Assistência Social e Saúde São José</td></tr>
+              <tr><td>017</td><td>APMF–Colégio Estadual Vila Industrial</td></tr>
+              <tr><td>018</td><td>APMF–Centro de Educação Infantil Adelina Dutra Boeira</td></tr>
+              <tr><td>020</td><td>META-Melhoramentos Educacionais do Trabalho do Aprendiz</td></tr>
+              <tr><td>021</td><td>APMF– Centro de Educação Infantil Jardim Alvorada</td></tr>
+              <tr><td>022</td><td>APMF–Escola Municipal Valdemar Boeira</td></tr>
+              <tr><td>023</td><td>APMF–Colégio Estadual Laranjeiras do Sul</td></tr>
+              <tr><td>024</td><td>APMF– Colégio Estadual Tancredo de Almeida Neves</td></tr>
+              <tr><td>025</td><td>APMF–Centro de Educação Infantil Divina Providência</td></tr>
+              <tr><td>027</td><td>APMF–Colégio Estadual Floriano Peixoto</td></tr>
+              <tr><td>028</td><td>APMF–Colégio Estadual Professor Gildo Aluísio Schuck</td></tr>
+              <tr><td>029</td><td>APMF– Escola Municipal Dr. Leocádio José Correia</td></tr>
+              <tr><td>030</td><td>APMF– Escola Municipal Aluísio Maier</td></tr>
+              <tr><td>031</td><td>APMF–Escola Municipal Água Verde</td></tr>
+              <tr><td>032</td><td>TULS-Teatro Unificado de Laranjeiras do Sul</td></tr>
+              <tr><td>033</td><td>CIEE/PR-CENTRO DE INTEGRAÇÃO EMPRESA – ESCOLA DO PARANÁ</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <a class="formulario" href="#">FORMULÁRIO EDITÁVEL PARA REGISTRO DE ENTIDADES, SERVIÇOS, PROGRAMAS E PROJETOS</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="rodape" id="contato">
+    <div class="container-grande rodape-grid">
+      <div>
+        <div class="marca"><span class="marca__logo" aria-hidden="true"></span><span>C.M.D.C.A.</span></div>
+        <p>O CMDCA – Conselho Municipal dos Direitos da Criança e do Adolescente é um órgão responsável pelas políticas públicas de defesa de direitos e promoção do bem estar social da criança e do adolescente no Município.</p>
+      </div>
+
+      <div>
+        <h3>Acesso Rápido</h3>
+        <ul class="links-rodape">
+          <li><a href="ultimas-noticias.html">Notícias</a></li>
+          <li><a href="galeria-de-fotos.html">Galeria de Fotos</a></li>
+          <li><a href="projetos-aprovados.html">Projetos</a></li>
+          <li><a href="conselho-tutelar.html">Conselho Tutelar</a></li>
+          <li><a href="composicao.html">Composição</a></li>
+          <li><a href="diretoria.html">Diretoria</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>Contato</h3>
+        <ul class="contato">
+          <li><span>☎</span><a href="tel:+554236358120">(42) 3635 8120</a></li>
+          <li><span>✉</span><a href="mailto:asocial@ls.pr.gov.br">asocial@ls.pr.gov.br</a></li>
+          <li><span>📍</span><span>Rua Barão do Rio Branco, nº 3170 – Bairro São Francisco CEP: 85303-130<br />Laranjeiras do Sul - PR</span></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <div class="barra-final"></div>
+  <button class="voltar-topo" type="button" aria-label="Voltar ao topo">⌃</button>
+
+  <script>
+    const botaoMenu = document.querySelector('.botao-menu');
+    const menu = document.querySelector('#menu-principal');
+    const voltarTopo = document.querySelector('.voltar-topo');
+
+    botaoMenu.addEventListener('click', () => {
+      const aberto = menu.classList.toggle('aberto');
+      botaoMenu.setAttribute('aria-expanded', aberto ? 'true' : 'false');
+      botaoMenu.textContent = aberto ? '×' : '☰';
+    });
+
+    voltarTopo.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>

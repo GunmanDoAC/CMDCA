@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin CMDCA</title>
+  <style>
+    :root {
+      --azul: #08aeea;
+      --azul-escuro: #078ac1;
+      --vermelho: #e63946;
+      --verde: #25ad65;
+      --texto: #24262d;
+      --cinza: #68707d;
+      --fundo: #f3f6f9;
+      --branco: #ffffff;
+      --borda: #dde5ec;
+      --sombra: 0 12px 34px rgba(0, 0, 0, 0.08);
+      --raio: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--fundo);
+      color: var(--texto);
+      line-height: 1.5;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    .login {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background:
+        radial-gradient(circle at top left, rgba(8, 174, 234, 0.18), transparent 35%),
+        linear-gradient(135deg, #f8fbff, #eef5f9);
+    }
+
+    .login-card,
+    .card {
+      background: var(--branco);
+      border: 1px solid var(--borda);
+      border-radius: var(--raio);
+      box-shadow: var(--sombra);
+    }
+
+    .login-card {
+      width: min(100%, 420px);
+      padding: 34px;
+      text-align: center;
+    }
+
+    .marca {
+      color: #f11b15;
+      font-weight: 900;
+      letter-spacing: 4px;
+      font-size: 2rem;
+      text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.12);
+      margin-bottom: 10px;
+    }
+
+    .login-card p {
+      color: var(--cinza);
+      margin-bottom: 24px;
+    }
+
+    .campo {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 16px;
+      text-align: left;
+    }
+
+    label {
+      font-weight: 700;
+      font-size: 0.92rem;
+      color: #353941;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      border: 1px solid var(--borda);
+      border-radius: 10px;
+      padding: 11px 12px;
+      background: #fff;
+      color: var(--texto);
+      outline: none;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: var(--azul);
+      box-shadow: 0 0 0 3px rgba(8, 174, 234, 0.16);
+    }
+
+    textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 10px;
+      padding: 11px 16px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: transform 0.15s ease, filter 0.15s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      filter: brightness(0.98);
+    }
+
+    .btn-primario {
+      background: var(--azul);
+      color: #fff;
+    }
+
+    .btn-secundario {
+      background: #e9f4fa;
+      color: #0b658a;
+    }
+
+    .btn-verde {
+      background: var(--verde);
+      color: #fff;
+    }
+
+    .btn-perigo {
+      background: #fee7e9;
+      color: var(--vermelho);
+    }
+
+    .erro {
+      color: var(--vermelho);
+      font-weight: 700;
+      margin-top: 12px;
+      min-height: 22px;
+    }
+
+    .admin {
+      display: none;
+      min-height: 100vh;
+    }
+
+    .topo {
+      background: #fff;
+      border-bottom: 1px solid var(--borda);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    }
+
+    .topo-conteudo {
+      width: min(100% - 32px, 1200px);
+      min-height: 74px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .topo h1 {
+      font-size: 1.2rem;
+      color: var(--texto);
+    }
+
+    .topo span {
+      color: var(--cinza);
+      font-size: 0.9rem;
+    }
+
+    .layout {
+      width: min(100% - 32px, 1200px);
+      margin: 28px auto;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 98px;
+      padding: 16px;
+    }
+
+    .sidebar h2 {
+      font-size: 1rem;
+      margin-bottom: 14px;
+    }
+
+    .nav-admin {
+      display: grid;
+      gap: 8px;
+    }
+
+    .nav-admin button {
+      border: 1px solid transparent;
+      background: transparent;
+      padding: 11px 12px;
+      border-radius: 10px;
+      text-align: left;
+      cursor: pointer;
+      font-weight: 700;
+      color: #444b55;
+    }
+
+    .nav-admin button.ativo,
+    .nav-admin button:hover {
+      background: #e9f4fa;
+      color: #075a7e;
+      border-color: #cfebf8;
+    }
+
+    .conteudo {
+      display: grid;
+      gap: 20px;
+    }
+
+    .card {
+      padding: 22px;
+    }
+
+    .card h2 {
+      font-size: 1.45rem;
+      margin-bottom: 6px;
+    }
+
+    .card > p {
+      color: var(--cinza);
+      margin-bottom: 18px;
+    }
+
+    .linha {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .item-editavel {
+      border: 1px solid var(--borda);
+      border-radius: 12px;
+      padding: 14px;
+      background: #fbfdff;
+      margin-bottom: 12px;
+    }
+
+    .item-topo {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .item-topo strong {
+      color: #333941;
+    }
+
+    .acoes {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .aviso {
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: #fff8e6;
+      border: 1px solid #f1d999;
+      color: #6b5200;
+      font-size: 0.95rem;
+    }
+
+    .sucesso {
+      display: none;
+      padding: 12px 14px;
+      border-radius: 10px;
+      background: #e7f8ef;
+      color: #14633a;
+      border: 1px solid #bce8d0;
+      font-weight: 700;
+    }
+
+    .preview {
+      background: #101820;
+      color: #d8e6ee;
+      border-radius: 12px;
+      padding: 14px;
+      overflow: auto;
+      max-height: 360px;
+      font-family: Consolas, Monaco, monospace;
+      font-size: 0.82rem;
+      white-space: pre-wrap;
+    }
+
+    .oculto {
+      display: none !important;
+    }
+
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+      }
+
+      .nav-admin {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .linha {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .topo-conteudo {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 14px 0;
+      }
+
+      .nav-admin {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="login" id="tela-login">
+    <div class="login-card">
+      <div class="marca">C.M.D.C.A.</div>
+      <p>Painel administrativo para editar os conteúdos do site.</p>
+
+      <form id="form-login">
+        <div class="campo">
+          <label for="senha">Senha de acesso</label>
+          <input id="senha" type="password" placeholder="Digite a senha" autocomplete="current-password" />
+        </div>
+        <button class="btn btn-primario" type="submit">Entrar no painel</button>
+        <div class="erro" id="erro-login"></div>
+      </form>
+    </div>
+  </section>
+
+  <section class="admin" id="painel-admin">
+    <header class="topo">
+      <div class="topo-conteudo">
+        <div>
+          <h1>Painel Administrativo CMDCA</h1>
+          <span>Edite notícias, projetos, entidades, conferências e conteúdo institucional.</span>
+        </div>
+        <button class="btn btn-perigo" id="sair">Sair</button>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar card">
+        <h2>Páginas</h2>
+        <nav class="nav-admin" aria-label="Menu do painel administrativo">
+          <button class="ativo" data-pagina="noticias">Notícias</button>
+          <button data-pagina="projetos">Banco de Projetos</button>
+          <button data-pagina="conselho">Conselho Tutelar</button>
+          <button data-pagina="galeria">Galeria de Fotos</button>
+          <button data-pagina="entidades">Entidades Registradas</button>
+          <button data-pagina="conferencias">Conferências</button>
+          <button data-pagina="config">Configurações</button>
+        </nav>
+      </aside>
+
+      <main class="conteudo">
+        <div class="aviso">
+          Este painel salva as alterações no navegador. Para atualizar o site para todos os visitantes, use o botão <strong>Exportar dados</strong> e depois conecte as páginas ao arquivo JSON ou a um servidor.
+        </div>
+
+        <div class="sucesso" id="mensagem-sucesso">Alterações salvas com sucesso.</div>
+
+        <section class="card secao-admin" id="secao-noticias">
+          <h2>Notícias</h2>
+          <p>Edite a lista de notícias exibida na página ultimas-noticias.html.</p>
+          <div id="lista-noticias"></div>
+          <div class="acoes">
+            <button class="btn btn-secundario" data-add="noticias">Adicionar notícia</button>
+            <button class="btn btn-verde" data-salvar>Salvar alterações</button>
+          </div>
+        </section>
+
+        <section class="card secao-admin oculto" id="secao-projetos">
+          <h2>Banco de Projetos</h2>
+          <p>Edite os projetos que aparecem em projetos-aprovados.html.</p>
+          <div id="lista-projetos"></div>
+          <div class="acoes">
+            <button class="btn btn-secundario" data-add="projetos">Adicionar projeto</button>
+            <button class="btn btn-verde" data-salvar>Salvar alterações</button>
+          </div>
+        </section>
+
+        <section class="card secao-admin oculto" id="secao-conselho">
+          <h2>Conselho Tutelar</h2>
+          <p>Edite o texto principal e o nome da imagem da página conselho-tutelar.html.</p>
+          <div class="campo">
+            <label for="conselho-titulo">Título da página</label>
+            <input id="conselho-titulo" type="text" />
+          </div>
+          <div class="campo">
+            <label for="conselho-html">Conteúdo da página em HTML</label>
+            <textarea id="conselho-html" style="min-height: 420px"></textarea>
+          </div>
+          <div class="campo">
+            <label for="conselho-imagem">Nome da imagem</label>
+            <input id="conselho-imagem" type="text" placeholder="conselho.png" />
+          </div>
+          <div class="acoes">
+            <button class="btn btn-verde" data-salvar>Salvar alterações</button>
+          </div>
+        </section>
+
+        <section class="card secao-admin oculto" id="secao-galeria">
+          <h2>Galeria de Fotos</h2>
+          <p>Cadastre fotos para aparecerem na página galeria-de-fotos.html.</p>
+          <div id="lista-galeria"></div>
+          <div class="acoes">
+            <button class="btn btn-secundario" data-add="galeria">Adicionar foto</button>
+            <button class="btn btn-verde" data-salvar>Salvar alterações</button>
+          </div>
+        </section>
+
+        <section class="card secao-admin oculto" id="secao-entidades">
+          <h2>Entidades Registradas</h2>
+          <p>Edite a tabela de entidades cadastradas.</p>
+          <div id="lista-entidades"></div>
+          <div class="acoes">
+            <button class="btn btn-secundario" data-add="entidades">Adicionar entidade</button>
+            <button class="btn btn-verde" data-salvar>Salvar alterações</button>
+          </div>
+        </section>
+
+        <section class="card secao-admin oculto" id="secao-conferencias">
+          <h2>Conferências</h2>
+          <p>Edite os documentos da página conferencias-cmdca.html.</p>
+          <div id="lista-conferencias"></div>
+          <div class="acoes">
+            <button class="btn btn-secundario" data-add="conferencias">Adicionar documento</button>
+            <button class="btn btn-verde" data-salvar>Salvar alterações</button>
+          </div>
+        </section>
+
+        <section class="card secao-admin oculto" id="secao-config">
+          <h2>Configurações e exportação</h2>
+          <p>Exporte ou importe os dados do site em formato JSON.</p>
+
+          <div class="linha">
+            <div class="campo">
+              <label for="site-titulo">Título do site</label>
+              <input id="site-titulo" type="text" />
+            </div>
+            <div class="campo">
+              <label for="site-subtitulo">Subtítulo do banner</label>
+              <input id="site-subtitulo" type="text" />
+            </div>
+          </div>
+
+          <div class="acoes">
+            <button class="btn btn-verde" data-salvar>Salvar configurações</button>
+            <button class="btn btn-primario" id="exportar">Exportar dados</button>
+            <label class="btn btn-secundario" for="importar" style="display:inline-block; cursor:pointer;">Importar dados</label>
+            <input id="importar" type="file" accept="application/json" style="display:none;" />
+            <button class="btn btn-perigo" id="resetar">Restaurar padrão</button>
+          </div>
+
+          <h3 style="margin: 24px 0 10px;">Prévia dos dados</h3>
+          <pre class="preview" id="preview-json"></pre>
+        </section>
+      </main>
+    </div>
+  </section>
+
+  <script>
+    const SENHA_ADMIN = "cmdca2026";
+    const CHAVE_DADOS = "cmdcaSiteData";
+    const CHAVE_LOGIN = "cmdcaAdminLogado";
+
+    const dadosPadrao = {
+      config: {
+        titulo: "Bem Vindo ao C.M.D.C.A",
+        subtitulo: "Conselho Municipal dos Direitos à Criança e ao Adolescente"
+      },
+      noticias: [
+        {
+          data: "19/05/2021",
+          hora: "17:55",
+          titulo: "Assistência Social de Laranjeiras do Sul coloca flores contra o abuso de crianças e adolescentes",
+          link: "#"
+        },
+        {
+          data: "11/05/2021",
+          hora: "13:30",
+          titulo: "Assistência Social fará campanha para alertar sobre violência contra crianças e adolescentes",
+          link: "#"
+        },
+        {
+          data: "11/05/2021",
+          hora: "10:00",
+          titulo: "Conselheiros tutelares e integrantes da rede de proteção recebem capacitação em LS",
+          link: "#"
+        }
+      ],
+      projetos: [
+        "PROJETO DE REFORMA DO CENTRO DA JUVENTUDE - R$ 969.026,24 - APROVADO PELA RESOLUÇÃO CMDCA Nº 04/2026",
+        "PROJETO “PARCERIAS QUE TRANSFORMAM – INSTITUTO ZOE” - APROVADO PELA ATA CMDCA Nº 01/2026 - 27/02/2026 - R$ 120.000,00",
+        "Projeto Laranjeiras na PMPR; CONSEG - Valor do projeto: R$ 727.270,00; Aprovado pela Resolução CMDCA nº 09/2025. OBS.: PROJETO JA ARRECADOU R$150.000,00",
+        "ATENDIMENTO PRIORITÁRIO E DIGNO PARA CRIANÇAS E ADOLESCENTES. INSTITUTO SÃO JOSÉ - VALOR DO PROJETO: R$ 170.890,32 - ATA CMDCA Nº 12/2024.",
+        "RAÍZES E VERSOS: CULTIVANDO SABEDORIA E SAÚDE FÍSICA E MENTAL NA HORTA ESCOLAR - APMF COLÉGIO FLORIANO PEIXOTO - R$ 100.000,00 - APROVADO PELA ATA Nº 10/2024",
+        "Projeto Acolhimento Institucional de Crianças e Adolescentes - Melhorias Campo de Futebol - S.O.S - RES CMDCA Nº 28/2024 - R$ 120.000,00",
+        "FUNDAÇÃO COLIBRI - Projeto Centro de Atendimento Especializado em Autismo - R$ 80.797,92 - Aprovado pelo CMDCA em 24/05/2024 - RES CMDCA Nº 22/2024",
+        "PROJETO SER E CONVIVER – APAE – VALOR R$ 460.000,00 – APRESENTADO EM 07-07-2023"
+      ],
+      conselho: {
+        titulo: "Conselho Tutelar",
+        imagem: "conselho.png",
+        html: "<p>O Conselho Tutelar foi criado no dia 13 de julho de 1990, como resultado da Lei 8.069, que instituiu o Estatuto da Criança e do Adolescente (ECA).</p>\n<p>Segundo o ECA, os Conselhos Tutelares são órgãos municipais destinados a garantir o cumprimento dos direitos da criança e do adolescente previstos no estatuto.</p>"
+      },
+      galeria: [],
+      entidades: [
+        { registro: "001 GOV.", entidade: "CENSE- Centro de Socioeducação" },
+        { registro: "002 GOV.", entidade: "Centro da Juventude" },
+        { registro: "002", entidade: "APAE- Associação de Pais e Amigos dos Excepcionais" },
+        { registro: "003", entidade: "CEMMIC-Centro de Meninas e Meninos Integrados na Comunidade" },
+        { registro: "006", entidade: "S.O.S-Serviço de Obras Sociais" },
+        { registro: "013", entidade: "IASJ- Instituto de Assistência Social e Saúde São José" },
+        { registro: "017", entidade: "APMF–Colégio Estadual Vila Industrial" },
+        { registro: "018", entidade: "APMF–Centro de Educação Infantil Adelina Dutra Boeira" },
+        { registro: "020", entidade: "META-Melhoramentos Educacionais do Trabalho do Aprendiz" },
+        { registro: "021", entidade: "APMF– Centro de Educação Infantil Jardim Alvorada" },
+        { registro: "022", entidade: "APMF–Escola Municipal Valdemar Boeira" },
+        { registro: "023", entidade: "APMF–Colégio Estadual Laranjeiras do Sul" },
+        { registro: "024", entidade: "APMF– Colégio Estadual Tancredo de Almeida Neves" },
+        { registro: "025", entidade: "APMF–Centro de Educação Infantil Divina Providência" },
+        { registro: "027", entidade: "APMF–Colégio Estadual Floriano Peixoto" },
+        { registro: "028", entidade: "APMF–Colégio Estadual Professor Gildo Aluísio Schuck" },
+        { registro: "029", entidade: "APMF– Escola Municipal Dr. Leocádio José Correia" },
+        { registro: "030", entidade: "APMF– Escola Municipal Aluísio Maier" },
+        { registro: "031", entidade: "APMF–Escola Municipal Água Verde" },
+        { registro: "032", entidade: "TULS-Teatro Unificado de Laranjeiras do Sul" },
+        { registro: "033", entidade: "CIEE/PR-CENTRO DE INTEGRAÇÃO EMPRESA – ESCOLA DO PARANÁ" }
+      ],
+      conferencias: [
+        {
+          assunto: "Instrumental de sistematização das propostas elaboradas na VI Conferência Municipal dos Direitos da Criança e do Adolescente de Laranjeiras do Sul – PR.",
+          arquivo: "#"
+        }
+      ]
+    };
+
+    let dados = carregarDados();
+
+    const telaLogin = document.querySelector("#tela-login");
+    const painelAdmin = document.querySelector("#painel-admin");
+    const formLogin = document.querySelector("#form-login");
+    const erroLogin = document.querySelector("#erro-login");
+    const botoesMenu = document.querySelectorAll(".nav-admin button");
+    const secoes = document.querySelectorAll(".secao-admin");
+    const mensagemSucesso = document.querySelector("#mensagem-sucesso");
+
+    iniciar();
+
+    function iniciar() {
+      if (sessionStorage.getItem(CHAVE_LOGIN) === "sim") {
+        abrirPainel();
+      }
+
+      formLogin.addEventListener("submit", entrar);
+      document.querySelector("#sair").addEventListener("click", sair);
+      document.querySelectorAll("[data-salvar]").forEach(botao => botao.addEventListener("click", salvarTudo));
+      document.querySelectorAll("[data-add]").forEach(botao => botao.addEventListener("click", adicionarItem));
+      document.querySelector("#exportar").addEventListener("click", exportarDados);
+      document.querySelector("#importar").addEventListener("change", importarDados);
+      document.querySelector("#resetar").addEventListener("click", resetarDados);
+
+      botoesMenu.forEach(botao => {
+        botao.addEventListener("click", () => trocarPagina(botao.dataset.pagina));
+      });
+
+      renderizarTudo();
+    }
+
+    function entrar(evento) {
+      evento.preventDefault();
+      const senha = document.querySelector("#senha").value.trim();
+
+      if (senha !== SENHA_ADMIN) {
+        erroLogin.textContent = "Senha incorreta.";
+        return;
+      }
+
+      sessionStorage.setItem(CHAVE_LOGIN, "sim");
+      abrirPainel();
+    }
+
+    function abrirPainel() {
+      telaLogin.style.display = "none";
+      painelAdmin.style.display = "block";
+      renderizarTudo();
+    }
+
+    function sair() {
+      sessionStorage.removeItem(CHAVE_LOGIN);
+      telaLogin.style.display = "grid";
+      painelAdmin.style.display = "none";
+      document.querySelector("#senha").value = "";
+    }
+
+    function trocarPagina(pagina) {
+      botoesMenu.forEach(botao => botao.classList.toggle("ativo", botao.dataset.pagina === pagina));
+      secoes.forEach(secao => secao.classList.add("oculto"));
+      document.querySelector(`#secao-${pagina}`).classList.remove("oculto");
+      atualizarPreview();
+    }
+
+    function carregarDados() {
+      const salvo = localStorage.getItem(CHAVE_DADOS);
+      if (!salvo) return structuredClone(dadosPadrao);
+
+      try {
+        return mesclarDados(structuredClone(dadosPadrao), JSON.parse(salvo));
+      } catch {
+        return structuredClone(dadosPadrao);
+      }
+    }
+
+    function mesclarDados(base, novo) {
+      return {
+        ...base,
+        ...novo,
+        config: { ...base.config, ...(novo.config || {}) },
+        conselho: { ...base.conselho, ...(novo.conselho || {}) }
+      };
+    }
+
+    function persistir() {
+      localStorage.setItem(CHAVE_DADOS, JSON.stringify(dados, null, 2));
+      atualizarPreview();
+    }
+
+    function renderizarTudo() {
+      renderizarNoticias();
+      renderizarProjetos();
+      renderizarConselho();
+      renderizarGaleria();
+      renderizarEntidades();
+      renderizarConferencias();
+      renderizarConfig();
+      atualizarPreview();
+    }
+
+    function renderizarNoticias() {
+      const container = document.querySelector("#lista-noticias");
+      container.innerHTML = "";
+
+      dados.noticias.forEach((noticia, indice) => {
+        container.insertAdjacentHTML("beforeend", `
+          <div class="item-editavel" data-tipo="noticias" data-indice="${indice}">
+            <div class="item-topo">
+              <strong>Notícia ${indice + 1}</strong>
+              <button class="btn btn-perigo" onclick="removerItem('noticias', ${indice})">Remover</button>
+            </div>
+            <div class="linha">
+              <div class="campo">
+                <label>Data</label>
+                <input data-campo="data" value="${escapar(noticia.data)}" />
+              </div>
+              <div class="campo">
+                <label>Hora</label>
+                <input data-campo="hora" value="${escapar(noticia.hora)}" />
+              </div>
+            </div>
+            <div class="campo">
+              <label>Título</label>
+              <input data-campo="titulo" value="${escapar(noticia.titulo)}" />
+            </div>
+            <div class="campo">
+              <label>Link</label>
+              <input data-campo="link" value="${escapar(noticia.link)}" />
+            </div>
+          </div>
+        `);
+      });
+    }
+
+    function renderizarProjetos() {
+      const container = document.querySelector("#lista-projetos");
+      container.innerHTML = "";
+
+      dados.projetos.forEach((projeto, indice) => {
+        container.insertAdjacentHTML("beforeend", `
+          <div class="item-editavel" data-tipo="projetos" data-indice="${indice}">
+            <div class="item-topo">
+              <strong>Projeto ${indice + 1}</strong>
+              <button class="btn btn-perigo" onclick="removerItem('projetos', ${indice})">Remover</button>
+            </div>
+            <div class="campo">
+              <label>Descrição do projeto</label>
+              <textarea data-campo="texto">${escapar(projeto)}</textarea>
+            </div>
+          </div>
+        `);
+      });
+    }
+
+    function renderizarConselho() {
+      document.querySelector("#conselho-titulo").value = dados.conselho.titulo;
+      document.querySelector("#conselho-html").value = dados.conselho.html;
+      document.querySelector("#conselho-imagem").value = dados.conselho.imagem;
+    }
+
+    function renderizarGaleria() {
+      const container = document.querySelector("#lista-galeria");
+      container.innerHTML = "";
+
+      if (dados.galeria.length === 0) {
+        container.innerHTML = "<p style='color:#68707d'>Nenhuma foto cadastrada ainda.</p>";
+      }
+
+      dados.galeria.forEach((foto, indice) => {
+        container.insertAdjacentHTML("beforeend", `
+          <div class="item-editavel" data-tipo="galeria" data-indice="${indice}">
+            <div class="item-topo">
+              <strong>Foto ${indice + 1}</strong>
+              <button class="btn btn-perigo" onclick="removerItem('galeria', ${indice})">Remover</button>
+            </div>
+            <div class="linha">
+              <div class="campo">
+                <label>Arquivo da imagem</label>
+                <input data-campo="arquivo" value="${escapar(foto.arquivo)}" placeholder="foto1.jpg" />
+              </div>
+              <div class="campo">
+                <label>Título</label>
+                <input data-campo="titulo" value="${escapar(foto.titulo)}" />
+              </div>
+            </div>
+            <div class="campo">
+              <label>Descrição</label>
+              <textarea data-campo="descricao">${escapar(foto.descricao)}</textarea>
+            </div>
+          </div>
+        `);
+      });
+    }
+
+    function renderizarEntidades() {
+      const container = document.querySelector("#lista-entidades");
+      container.innerHTML = "";
+
+      dados.entidades.forEach((entidade, indice) => {
+        container.insertAdjacentHTML("beforeend", `
+          <div class="item-editavel" data-tipo="entidades" data-indice="${indice}">
+            <div class="item-topo">
+              <strong>Entidade ${indice + 1}</strong>
+              <button class="btn btn-perigo" onclick="removerItem('entidades', ${indice})">Remover</button>
+            </div>
+            <div class="linha">
+              <div class="campo">
+                <label>Registro</label>
+                <input data-campo="registro" value="${escapar(entidade.registro)}" />
+              </div>
+              <div class="campo">
+                <label>Nome da entidade</label>
+                <input data-campo="entidade" value="${escapar(entidade.entidade)}" />
+              </div>
+            </div>
+          </div>
+        `);
+      });
+    }
+
+    function renderizarConferencias() {
+      const container = document.querySelector("#lista-conferencias");
+      container.innerHTML = "";
+
+      dados.conferencias.forEach((documento, indice) => {
+        container.insertAdjacentHTML("beforeend", `
+          <div class="item-editavel" data-tipo="conferencias" data-indice="${indice}">
+            <div class="item-topo">
+              <strong>Documento ${indice + 1}</strong>
+              <button class="btn btn-perigo" onclick="removerItem('conferencias', ${indice})">Remover</button>
+            </div>
+            <div class="campo">
+              <label>Assunto</label>
+              <textarea data-campo="assunto">${escapar(documento.assunto)}</textarea>
+            </div>
+            <div class="campo">
+              <label>Arquivo/link para download</label>
+              <input data-campo="arquivo" value="${escapar(documento.arquivo)}" placeholder="arquivo.pdf" />
+            </div>
+          </div>
+        `);
+      });
+    }
+
+    function renderizarConfig() {
+      document.querySelector("#site-titulo").value = dados.config.titulo;
+      document.querySelector("#site-subtitulo").value = dados.config.subtitulo;
+    }
+
+    function adicionarItem(evento) {
+      salvarFormularioSemMensagem();
+      const tipo = evento.target.dataset.add;
+
+      const novos = {
+        noticias: { data: "", hora: "", titulo: "Nova notícia", link: "#" },
+        projetos: "Novo projeto",
+        galeria: { arquivo: "foto.jpg", titulo: "Nova foto", descricao: "" },
+        entidades: { registro: "", entidade: "Nova entidade" },
+        conferencias: { assunto: "Novo documento", arquivo: "#" }
+      };
+
+      dados[tipo].push(novos[tipo]);
+      persistir();
+      renderizarTudo();
+    }
+
+    window.removerItem = function(tipo, indice) {
+      if (!confirm("Deseja remover este item?")) return;
+      dados[tipo].splice(indice, 1);
+      persistir();
+      renderizarTudo();
+      mostrarSucesso("Item removido com sucesso.");
+    };
+
+    function salvarTudo() {
+      salvarFormularioSemMensagem();
+      persistir();
+      renderizarTudo();
+      mostrarSucesso("Alterações salvas com sucesso.");
+    }
+
+    function salvarFormularioSemMensagem() {
+      salvarListaObjetos("noticias", ["data", "hora", "titulo", "link"]);
+      salvarListaTextos("projetos");
+      salvarListaObjetos("galeria", ["arquivo", "titulo", "descricao"]);
+      salvarListaObjetos("entidades", ["registro", "entidade"]);
+      salvarListaObjetos("conferencias", ["assunto", "arquivo"]);
+
+      dados.conselho.titulo = document.querySelector("#conselho-titulo").value;
+      dados.conselho.html = document.querySelector("#conselho-html").value;
+      dados.conselho.imagem = document.querySelector("#conselho-imagem").value;
+      dados.config.titulo = document.querySelector("#site-titulo").value;
+      dados.config.subtitulo = document.querySelector("#site-subtitulo").value;
+    }
+
+    function salvarListaObjetos(tipo, campos) {
+      const itens = document.querySelectorAll(`[data-tipo="${tipo}"]`);
+      dados[tipo] = Array.from(itens).map(item => {
+        const objeto = {};
+        campos.forEach(campo => {
+          objeto[campo] = item.querySelector(`[data-campo="${campo}"]`).value;
+        });
+        return objeto;
+      });
+    }
+
+    function salvarListaTextos(tipo) {
+      const itens = document.querySelectorAll(`[data-tipo="${tipo}"]`);
+      dados[tipo] = Array.from(itens).map(item => item.querySelector(`[data-campo="texto"]`).value);
+    }
+
+    function exportarDados() {
+      salvarFormularioSemMensagem();
+      persistir();
+
+      const blob = new Blob([JSON.stringify(dados, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "dados-site.json";
+      link.click();
+      URL.revokeObjectURL(url);
+      mostrarSucesso("Arquivo dados-site.json exportado.");
+    }
+
+    function importarDados(evento) {
+      const arquivo = evento.target.files[0];
+      if (!arquivo) return;
+
+      const leitor = new FileReader();
+      leitor.onload = () => {
+        try {
+          const importado = JSON.parse(leitor.result);
+          dados = mesclarDados(structuredClone(dadosPadrao), importado);
+          persistir();
+          renderizarTudo();
+          mostrarSucesso("Dados importados com sucesso.");
+        } catch {
+          alert("O arquivo selecionado não é um JSON válido.");
+        }
+      };
+      leitor.readAsText(arquivo);
+      evento.target.value = "";
+    }
+
+    function resetarDados() {
+      if (!confirm("Deseja restaurar os dados padrão? Isso apagará as alterações salvas neste navegador.")) return;
+      dados = structuredClone(dadosPadrao);
+      persistir();
+      renderizarTudo();
+      mostrarSucesso("Dados restaurados para o padrão.");
+    }
+
+    function mostrarSucesso(texto) {
+      mensagemSucesso.textContent = texto;
+      mensagemSucesso.style.display = "block";
+      setTimeout(() => {
+        mensagemSucesso.style.display = "none";
+      }, 2600);
+    }
+
+    function atualizarPreview() {
+      const preview = document.querySelector("#preview-json");
+      if (preview) preview.textContent = JSON.stringify(dados, null, 2);
+    }
+
+    function escapar(valor) {
+      return String(valor ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+    }
+  </script>
+</body>
+</html>

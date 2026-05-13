@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Conselho Tutelar | C.M.D.C.A.</title>
+  <meta name="description" content="Informações sobre o Conselho Tutelar de Laranjeiras do Sul." />
+  <style>
+    :root {
+      --azul: #009cff;
+      --texto: #111;
+      --branco: #fff;
+      --rodape: #12343d;
+      --container: 920px;
+      --container-grande: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--texto);
+      background: #fff;
+      line-height: 1.55;
+      font-size: 14px;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(100% - 32px, var(--container));
+      margin-inline: auto;
+    }
+
+    .container-grande {
+      width: min(100% - 32px, var(--container-grande));
+      margin-inline: auto;
+    }
+
+    .topo {
+      background: var(--branco);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.16);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .topo__conteudo {
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 34px;
+    }
+
+    .marca {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #f11b15;
+      font-weight: 900;
+      letter-spacing: 4px;
+      font-size: 1.38rem;
+      text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.12);
+      white-space: nowrap;
+    }
+
+    .marca__logo {
+      width: 45px;
+      height: 28px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 50% 45%, #f4f7fb 0 35%, transparent 36%),
+        linear-gradient(135deg, #dce6ed, #ffffff 45%, #cbd7df);
+      border: 1px solid #d8e0e6;
+      position: relative;
+      box-shadow: inset 0 0 0 2px #fff;
+      flex: 0 0 auto;
+    }
+
+    .marca__logo::after {
+      content: "";
+      position: absolute;
+      width: 23px;
+      height: 9px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #eb3b2f, #f5cc42, #2bbf6b, #139dec);
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .menu {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      list-style: none;
+      font-size: 0.86rem;
+      color: #292a2e;
+    }
+
+    .menu li {
+      position: relative;
+    }
+
+    .menu a,
+    .menu button {
+      border: 0;
+      background: transparent;
+      font: inherit;
+      color: inherit;
+      cursor: pointer;
+      padding: 23px 8px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .menu a:hover,
+    .menu button:hover {
+      color: var(--azul);
+    }
+
+    .submenu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      min-width: 190px;
+      list-style: none;
+      background: #fff;
+      border: 1px solid #ddd;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+      padding: 8px;
+      z-index: 20;
+    }
+
+    .submenu a {
+      padding: 9px 10px;
+      display: block;
+    }
+
+    .menu li:hover .submenu {
+      display: block;
+    }
+
+    .botao-menu {
+      display: none;
+      border: 0;
+      background: transparent;
+      font-size: 1.7rem;
+      cursor: pointer;
+    }
+
+    .hero {
+      height: 215px;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      color: white;
+      background:
+        linear-gradient(rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.18)),
+        radial-gradient(circle at 8% 70%, #ffdb29 0 10%, transparent 11%),
+        radial-gradient(circle at 34% 40%, #ffdf3c 0 9%, transparent 10%),
+        radial-gradient(circle at 56% 42%, #ffcb24 0 10%, transparent 11%),
+        radial-gradient(circle at 78% 45%, #eb2635 0 9%, transparent 10%),
+        radial-gradient(circle at 94% 47%, #e9b36c 0 9%, transparent 10%),
+        repeating-linear-gradient(90deg, rgba(255,255,255,.55) 0 5px, transparent 6px 150px),
+        linear-gradient(180deg, #9de95e 0 48%, #54ba31 49% 100%);
+      background-size: cover;
+      background-position: center;
+    }
+
+    .hero h1 {
+      font-size: 2.05rem;
+      line-height: 1;
+      font-weight: 900;
+      text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.6);
+    }
+
+    .hero p {
+      font-size: 1rem;
+      font-weight: 700;
+      text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.6);
+      margin-top: 8px;
+    }
+
+    .pagina {
+      padding: 42px 0 68px;
+    }
+
+    .titulo-secao {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      margin-bottom: 34px;
+      font-size: 1.75rem;
+      font-weight: 900;
+      color: #33343a;
+      text-align: center;
+    }
+
+    .titulo-secao::before,
+    .titulo-secao::after {
+      content: "";
+      width: 70px;
+      height: 2px;
+      background: var(--azul);
+    }
+
+    .conteudo {
+      max-width: 900px;
+      margin-inline: auto;
+    }
+
+    .conteudo p {
+      margin-bottom: 17px;
+      text-align: justify;
+    }
+
+    .conteudo h3 {
+      font-size: 1rem;
+      margin: 22px 0 14px;
+      font-weight: 400;
+      text-transform: none;
+    }
+
+    .conteudo ul,
+    .conteudo ol {
+      list-style: none;
+      margin: 12px 0 18px;
+      padding-left: 0;
+    }
+
+    .conteudo li {
+      margin-bottom: 12px;
+    }
+
+    .foto-conselho {
+      width: 610px;
+      margin: 24px 0 18px;
+    }
+
+    .rodape {
+      background: var(--rodape);
+      color: #dbe6ea;
+      padding: 44px 0 50px;
+    }
+
+    .rodape-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.85fr 1.15fr;
+      gap: 78px;
+      align-items: start;
+    }
+
+    .rodape .marca {
+      font-size: 1.1rem;
+      letter-spacing: 3px;
+      margin-bottom: 20px;
+    }
+
+    .rodape p,
+    .rodape li,
+    .rodape a {
+      color: #d4dde1;
+      font-size: 0.88rem;
+      line-height: 1.8;
+    }
+
+    .rodape h3 {
+      color: white;
+      margin-bottom: 18px;
+      font-size: 1.03rem;
+    }
+
+    .links-rodape {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px 36px;
+      list-style: none;
+    }
+
+    .contato {
+      display: grid;
+      gap: 13px;
+      list-style: none;
+    }
+
+    .contato li {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 12px;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .barra-final {
+      height: 40px;
+      background: #08aeea;
+    }
+
+    .voltar-topo {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 50%;
+      background: #08aeea;
+      color: #fff;
+      font-size: 1.4rem;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    }
+
+    @media (max-width: 900px) {
+      .topo__conteudo {
+        justify-content: space-between;
+        min-height: 64px;
+      }
+
+      .botao-menu {
+        display: block;
+      }
+
+      .menu {
+        display: none;
+        position: fixed;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: #fff;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 10px 20px 18px;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.16);
+      }
+
+      .menu.aberto {
+        display: flex;
+      }
+
+      .menu a,
+      .menu button {
+        width: 100%;
+        justify-content: space-between;
+        padding: 13px 8px;
+      }
+
+      .submenu {
+        position: static;
+        box-shadow: none;
+        border: 0;
+        padding-left: 14px;
+      }
+
+      .rodape-grid {
+        grid-template-columns: 1fr;
+        gap: 34px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      body {
+        font-size: 13.5px;
+      }
+
+      .hero {
+        height: 145px;
+      }
+
+      .hero h1 {
+        font-size: 1.55rem;
+      }
+
+      .titulo-secao {
+        font-size: 1.55rem;
+        gap: 12px;
+      }
+
+      .titulo-secao::before,
+      .titulo-secao::after {
+        width: 44px;
+      }
+
+      .links-rodape {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topo" id="topo">
+    <div class="container-grande topo__conteudo">
+      <a href="index.html" class="marca" aria-label="Página inicial do CMDCA">
+        <span class="marca__logo" aria-hidden="true"></span>
+        <span>C.M.D.C.A.</span>
+      </a>
+
+      <button class="botao-menu" type="button" aria-label="Abrir menu" aria-controls="menu-principal" aria-expanded="false">☰</button>
+
+      <nav aria-label="Menu principal">
+        <ul class="menu" id="menu-principal">
+          <li><a href="index.html">Início</a></li>
+          <li>
+            <button type="button">Comunicação <span>⌄</span></button>
+            <ul class="submenu">
+              <li><a href="ultimas-noticias.html">Últimas Notícias</a></li>
+              <li><a href="campanhas.html">Campanhas</a></li>
+              <li><a href="galeria-de-fotos.html">Galeria de Fotos</a></li>
+            </ul>
+          </li>
+          <li>
+            <button type="button">Institucional <span>⌄</span></button>
+            <ul class="submenu">
+              <li><a href="sobre.html">Sobre o CMDCA</a></li>
+              <li><a href="diretoria.html">Diretoria</a></li>
+              <li><a href="composicao.html">Composição</a></li>
+            </ul>
+          </li>
+          <li>
+            <button type="button">Projetos <span>⌄</span></button>
+            <ul class="submenu">
+              <li><a href="projetos-aprovados.html">Projetos Aprovados</a></li>
+              <li><a href="banco-de-projetos.html">Banco de Projetos</a></li>
+            </ul>
+          </li>
+          <li>
+            <button type="button">Documentos <span>⌄</span></button>
+            <ul class="submenu">
+              <li><a href="resolucoes.html">Resoluções</a></li>
+              <li><a href="atas.html">Atas</a></li>
+              <li><a href="conferencias-cmdca.html">Conferências</a></li>
+            </ul>
+          </li>
+          <li>
+            <button type="button">Conselho Tutelar <span>⌄</span></button>
+            <ul class="submenu">
+              <li><a href="conselho-tutelar.html">Informações</a></li>
+              <li><a href="#contato">Contato</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="titulo-hero">
+      <div>
+        <h1 id="titulo-hero">Bem Vindo ao C.M.D.C.A</h1>
+        <p>Conselho Municipal dos Direitos à Criança e ao Adolescente</p>
+      </div>
+    </section>
+
+    <section class="pagina">
+      <div class="container conteudo">
+        <h2 class="titulo-secao">Conselho Tutelar</h2>
+
+        <p>O Conselho Tutelar foi criado no dia 13 de julho de 1990, como resultado da Lei 8.069, que instituiu o Estatuto da Criança e do Adolescente (ECA). Segundo o ECA, os Conselhos Tutelares são órgãos municipais destinados a garantir o cumprimento dos direitos da criança e do adolescente previstos no estatuto.</p>
+
+        <p>É um órgão autônomo - não recebe interferência da prefeitura, do poder legislativo municipal, do sistema judiciário ou do ministério público - e não jurisdicional, ou seja, não tem o poder de julgar e aplicar medidas judiciais. De acordo com o ECA, o Conselho Tutelar é composto por cinco membros eleitos pela comunidade para um mandato de 4 anos.</p>
+
+        <p>O último levantamento da Secretaria de Direitos Humanos (SDH) realizado em 2015, revelou que havia 5.956 conselhos tutelares instalados em 5.559 municípios, uma cobertura de praticamente 100% do território brasileiro.</p>
+
+        <h3>A importância do Conselho Tutelar</h3>
+
+        <p>Integrante do Sistema de Garantia dos Direitos da Criança e do Adolescente (SGD), o Conselho Tutelar é um órgão público municipal que tem como missão representar a sociedade na proteção e na garantia dos direitos de crianças e adolescentes, contra qualquer ação ou omissão do Estado ou os responsáveis legais que resulte na violação ou ameaça de violação dos direitos estabelecidos pelo ECA.</p>
+
+        <p>É papel do conselheiro tutelar fiscalizar se a família, a comunidade, a sociedade em geral e o Poder Público estão assegurando com absoluta prioridade a efetivação dos direitos das crianças e dos adolescentes.</p>
+
+        <p>Quando os conselheiros recebem uma denúncia, após a confirmação da violação de direitos, cabe ao órgão aplicar medidas de proteção. Eles requisitam serviços e aplicam as medidas protetivas, mas não executam as medidas de proteção, pois essa responsabilidade é do poder público, das famílias e da sociedade civil em geral. É necessário que aqueles que compõem um Conselho Tutelar saibam ouvir e entender os casos que chegam a eles, pois cada um tem direito a um atendimento personalizado.</p>
+
+        <p>O Conselho Tutelar deve ser acionado quando os serviços para crianças e adolescentes não cumprem suas funções. Se, por exemplo, os pais tentam matricular um(a) filho(a) na escola e não houver vaga, cabe aos responsáveis acionar o órgão. Os conselheiros podem requisitar serviços públicos nas áreas de saúde, educação, serviço social, previdência, trabalho e segurança.</p>
+
+        <h3>Entenda as atribuições do Conselho Tutelar</h3>
+
+        <p>O Estatuto da Criança e do Adolescente estabelece diversas funções oficiais dos Conselhos Tutelares de cada município. Entre elas, estão:</p>
+
+        <ul>
+          <li>• Aconselhamento de pais, responsáveis e professores;</li>
+          <li>• Requisição de serviços públicos nas áreas de saúde, educação, serviço social, previdência, trabalho e segurança;</li>
+          <li>• Registro de denúncias de qualquer violação dos direitos de crianças e adolescentes – como violência física, psicológica e sexual, negligência e abandono;</li>
+          <li>• Encaminhamento de denúncias ao Ministério Público;</li>
+          <li>• Contribuição para o poder público na elaboração da proposta orçamentária para planos e programas de atendimento dos direitos da criança e do adolescente.</li>
+        </ul>
+
+        <p>Ainda que possua um caráter de proteção aos direitos, o órgão também engloba responsabilidades na prevenção de violações. Quando os conselheiros perceberem na comunidade que há certos comportamentos sistemáticos que violam os direitos das crianças e adolescentes, cabe a eles averiguar a situação e repassar para outros órgãos. Além disso, a realização de palestras e distribuição de informação também é atribuição dos Conselhos Tutelares para que a Rede de Proteção aumente cada vez mais.</p>
+
+        <p>Assim, o Conselho Tutelar é um grande aliado na proteção dos direitos da infância e da juventude e a sua implementação no país é de extrema importância para o enfrentamento à violência contra crianças e adolescentes. É necessário que os municípios disponibilizem os recursos básicos para a criação destes órgãos para que, então, eles possam cumprir sua missão de maneira eficaz.</p>
+
+        <h3>ELEIÇÃO CONSELHO TUTELAR DE LARANJEIRAS DO SUL – DIA 06/10/2019</h3>
+
+        <p>Terminou pouco depois das 18h do domingo, 06/10/2019, a apuração dos votos dos candidatos à eleição do Conselho Tutelar de Laranjeiras do Sul. A comissão eleitoral apurou os votos das seis urnas que foram colocadas no Colégio Gildo Aluísio Schuck. Estavam aptos a disputar a eleição 22 candidatos. Compareceram para votar 2.274 pessoas. Votos válidos: 2.251. Nulos: 14 e brancos: 9 votos. Foram eleitos cinco candidatos e os demais, do 6º ao 22º lugar em votação, ficam como suplentes. Os eleitos tomam posse em janeiro de 2020. A eleição foi coordenada pelo CMDCA – Conselho Municipal dos Direitos da Criança e do Adolescente de Laranjeiras do Sul.</p>
+
+        <p>Classificação final</p>
+        <p>Classificação final</p>
+
+        <ol>
+          <li>1º - Maria de Lourdes Pereira Matoso – 236 votos.</li>
+          <li>2º - Irani de Oliveira – 229 votos.</li>
+          <li>3º - Cleuza Terezinha Malherbi – 185 votos.</li>
+          <li>4º - Lindamir Aparecida Teston Kurylo – 158 votos.</li>
+          <li>5º - Arlene do Rocio de Oliveira França – 150 votos.</li>
+        </ol>
+
+        <p>Suplentes</p>
+
+        <ol>
+          <li>6º - Josnei Alves Penteado – 139</li>
+          <li>7º - Junior Silva – 137</li>
+          <li>8º - Marilda Abreu de Araújo – 136</li>
+          <li>9º - Eliana Biava – 122</li>
+          <li>10º - Ana Karla Gazzieiro – 108</li>
+          <li>11º - Lucas dos Anjos Cavalheiro – 85</li>
+          <li>12º - Santina dos Santos de Barros – 78</li>
+          <li>13º - Michele Kowalski – 71</li>
+          <li>14º - Adriana Rodakievicz – 69</li>
+          <li>15º - Eliane dos Santos – 65</li>
+          <li>16º - Renata Joelia Damasio da Gama – 58</li>
+          <li>17º - Renata Armiliato dos Santos – 51</li>
+          <li>18º - Deise Gonçalves – 46</li>
+          <li>19º - Vanessa Sehn – 38</li>
+          <li>20º - Sheila Daiana Cardoso – 37</li>
+          <li>21º - Vagner de Oliveira Prestes – 31</li>
+          <li>22º - Elessandra Nascimento Paiano – 22</li>
+        </ol>
+
+        <p>O mandato dos Conselheiros Tutelares é para o quadriênio 2020/2023. Cada membro titular do Conselho receberá mensalmente um salário base com valor estipulado em R$ 1.802,05. Os suplentes não serão remunerados, exceto quando assumirem a condição de titulares. A posse está marcada para o dia 10 de janeiro de 2020.</p>
+
+        <img class="foto-conselho" src="conselho.png" alt="Conselheiros tutelares diplomados em Laranjeiras do Sul" />
+
+        <p>Os cinco novos conselheiros tutelares, eleitos em 06/10/2019 em Laranjeiras do Sul, foram diplomados em solenidade realizada no gabinete do prefeito Berto Silva. No ato, realizado pela Secretaria Municipal de Assistência Social e Segurança da Família e pelo Conselho Municipal dos Direitos da Criança e do Adolescente, CMDCA, os novos conselheiros fizeram o juramento e receberam o diploma das mãos do prefeito Berto Silva, Secretaria de Assistência Social e Segurança da Família, Eliza Gemelli da Silva, Presidente do CMDCA, Simone Ribeiro e do Assistente Social, Nilson Bronholo.</p>
+
+        <p>Foram diplomadas Arlene do Rocio de Oliveira, eleita com 150 votos, Lindamir Aparecida Teston Kurylo, eleita com 158 votos, Cleuza Terezinha Malherbi, eleita com 185 votos, Irani de Oliveira, eleita com 229 votos e Maria de Lurdes Pereira Matoso, eleita com 236 votos.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="rodape" id="contato">
+    <div class="container-grande rodape-grid">
+      <div>
+        <div class="marca"><span class="marca__logo" aria-hidden="true"></span><span>C.M.D.C.A.</span></div>
+        <p>O CMDCA – Conselho Municipal dos Direitos da Criança e do Adolescente é um órgão responsável pelas políticas públicas de defesa de direitos e promoção do bem estar social da criança e do adolescente no Município.</p>
+      </div>
+
+      <div>
+        <h3>Acesso Rápido</h3>
+        <ul class="links-rodape">
+          <li><a href="ultimas-noticias.html">Notícias</a></li>
+          <li><a href="galeria-de-fotos.html">Galeria de Fotos</a></li>
+          <li><a href="projetos-aprovados.html">Projetos</a></li>
+          <li><a href="conselho-tutelar.html">Conselho Tutelar</a></li>
+          <li><a href="composicao.html">Composição</a></li>
+          <li><a href="diretoria.html">Diretoria</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>Contato</h3>
+        <ul class="contato">
+          <li><span>☎</span><a href="tel:+554236358120">(42) 3635 8120</a></li>
+          <li><span>✉</span><a href="mailto:asocial@ls.pr.gov.br">asocial@ls.pr.gov.br</a></li>
+          <li><span>📍</span><span>Rua Barão do Rio Branco, nº 3170 – Bairro São Francisco CEP: 85303-130<br />Laranjeiras do Sul - PR</span></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <div class="barra-final"></div>
+  <button class="voltar-topo" type="button" aria-label="Voltar ao topo">⌃</button>
+
+  <script>
+    const botaoMenu = document.querySelector('.botao-menu');
+    const menu = document.querySelector('#menu-principal');
+    const voltarTopo = document.querySelector('.voltar-topo');
+
+    botaoMenu.addEventListener('click', () => {
+      const aberto = menu.classList.toggle('aberto');
+      botaoMenu.setAttribute('aria-expanded', aberto ? 'true' : 'false');
+      botaoMenu.textContent = aberto ? '×' : '☰';
+    });
+
+    voltarTopo.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>

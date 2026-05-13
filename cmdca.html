@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>C.M.D.C.A. | Conselho Municipal dos Direitos da Criança e do Adolescente</title>
+  <meta name="description" content="Site institucional do CMDCA com acesso rápido a projetos, notícias, documentos e conselho tutelar." />
+  <style>
+    :root {
+      --azul: #09a9e8;
+      --azul-escuro: #0789c5;
+      --verde: #25ad65;
+      --roxo: #7a25f4;
+      --laranja: #ff7a16;
+      --turquesa: #41d2c7;
+      --texto: #2f2f35;
+      --texto-claro: #6f747b;
+      --fundo: #f6f6f6;
+      --branco: #ffffff;
+      --rodape: #12343d;
+      --sombra: 0 10px 30px rgba(0, 0, 0, 0.08);
+      --borda: 1px solid rgba(0, 0, 0, 0.08);
+      --raio: 10px;
+      --container: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--texto);
+      background: var(--fundo);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(100% - 32px, var(--container));
+      margin-inline: auto;
+    }
+
+    .topo {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--branco);
+      border-bottom: var(--borda);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    }
+
+    .topo__conteudo {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+    }
+
+    .marca {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-shrink: 0;
+      font-weight: 900;
+      color: #f11b15;
+      letter-spacing: 5px;
+      font-size: clamp(1.35rem, 2vw, 1.75rem);
+      text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.12);
+    }
+
+    .marca__logo {
+      width: 52px;
+      height: 32px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 50% 45%, #f4f7fb 0 35%, transparent 36%),
+        linear-gradient(135deg, #dce6ed, #ffffff 45%, #cbd7df);
+      border: 1px solid #d8e0e6;
+      position: relative;
+      box-shadow: inset 0 0 0 2px #fff;
+    }
+
+    .marca__logo::after {
+      content: "";
+      position: absolute;
+      width: 25px;
+      height: 10px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #eb3b2f, #f5cc42, #2bbf6b, #139dec);
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0.9;
+    }
+
+    .menu {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      list-style: none;
+      font-size: 0.95rem;
+      color: #3d3d42;
+    }
+
+    .menu a,
+    .menu button {
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      font: inherit;
+      color: inherit;
+      padding: 26px 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s ease, background 0.2s ease;
+    }
+
+    .menu a:hover,
+    .menu button:hover,
+    .menu a:focus-visible,
+    .menu button:focus-visible {
+      color: var(--azul);
+      background: #f3fbff;
+      outline: none;
+    }
+
+    .menu__item {
+      position: relative;
+    }
+
+    .submenu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      min-width: 210px;
+      list-style: none;
+      background: var(--branco);
+      border: var(--borda);
+      box-shadow: var(--sombra);
+      border-radius: 0 0 var(--raio) var(--raio);
+      padding: 8px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(8px);
+      transition: 0.2s ease;
+    }
+
+    .menu__item:hover .submenu,
+    .menu__item:focus-within .submenu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .submenu a {
+      padding: 10px 12px;
+      border-radius: 8px;
+      color: #4a4a4f;
+    }
+
+    .botao-menu {
+      display: none;
+      border: 0;
+      background: transparent;
+      font-size: 1.8rem;
+      cursor: pointer;
+      color: var(--texto);
+    }
+
+    .hero {
+      min-height: 320px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      color: white;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.22)),
+        radial-gradient(circle at 12% 72%, #feda36 0 10%, transparent 11%),
+        radial-gradient(circle at 32% 43%, #ff2e3c 0 7%, transparent 8%),
+        radial-gradient(circle at 55% 28%, #ffdc2e 0 8%, transparent 9%),
+        radial-gradient(circle at 75% 42%, #00aaf0 0 7%, transparent 8%),
+        radial-gradient(circle at 91% 52%, #f7c174 0 8%, transparent 9%),
+        linear-gradient(180deg, #a4f270 0 42%, #44b935 43% 100%);
+      isolation: isolate;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(90deg, transparent 0 96px, rgba(255,255,255,.6) 97px 102px, transparent 103px 150px),
+        linear-gradient(90deg, rgba(255,255,255,0.08), transparent 25%, transparent 75%, rgba(255,255,255,0.08));
+      opacity: 0.55;
+      z-index: -1;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 24px;
+      background: linear-gradient(90deg, #764dc6, #3f1a74);
+      opacity: 0.65;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      line-height: 1.1;
+      font-weight: 900;
+      text-shadow: 3px 3px 2px rgba(0, 0, 0, 0.5);
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      font-size: clamp(1rem, 2.2vw, 1.45rem);
+      font-weight: 700;
+      text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.6);
+    }
+
+    section {
+      padding: 70px 0;
+    }
+
+    section:nth-of-type(even) {
+      background: var(--branco);
+    }
+
+    .titulo-secao {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 22px;
+      margin-bottom: 52px;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 900;
+      line-height: 1.1;
+      text-align: center;
+    }
+
+    .titulo-secao::before,
+    .titulo-secao::after {
+      content: "";
+      width: min(80px, 18vw);
+      height: 3px;
+      background: var(--azul);
+      border-radius: 999px;
+    }
+
+    .acesso-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 28px;
+    }
+
+    .atalho {
+      min-height: 150px;
+      border-radius: 4px;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 22px 16px;
+      box-shadow: var(--sombra);
+      transition: transform 0.2s ease, filter 0.2s ease;
+    }
+
+    .atalho:hover,
+    .atalho:focus-visible {
+      transform: translateY(-5px);
+      filter: brightness(1.03);
+      outline: none;
+    }
+
+    .atalho svg {
+      width: 42px;
+      height: 42px;
+      margin-bottom: 10px;
+      fill: currentColor;
+    }
+
+    .atalho strong {
+      font-size: 1.04rem;
+      line-height: 1.25;
+      margin-bottom: 4px;
+    }
+
+    .atalho span {
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    .atalho--azul { background: var(--azul); }
+    .atalho--verde { background: var(--verde); }
+    .atalho--roxo { background: var(--roxo); }
+    .atalho--azul2 { background: #1295e8; }
+    .atalho--turquesa { background: var(--turquesa); }
+    .atalho--laranja { background: var(--laranja); }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 34px;
+    }
+
+    .card {
+      background: var(--branco);
+      border: var(--borda);
+      box-shadow: var(--sombra);
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.12);
+    }
+
+    .card__imagem {
+      height: 170px;
+      background: linear-gradient(135deg, #d7eaf4, #ffffff);
+      overflow: hidden;
+    }
+
+    .card__imagem--foto1 { background: linear-gradient(135deg, #6ebc5f, #dcebb1 60%, #7aaed4); }
+    .card__imagem--foto2 { background: linear-gradient(135deg, #101a36, #0b8cd2 55%, #f1ddcf); }
+    .card__imagem--foto3 { background: linear-gradient(135deg, #d9d9d9, #ffffff 55%, #6a8fbd); }
+
+    .card__conteudo {
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      flex: 1;
+    }
+
+    .card__titulo {
+      color: #009ff2;
+      font-size: 1.25rem;
+      font-weight: 500;
+      line-height: 1.8;
+      text-transform: uppercase;
+    }
+
+    .card__resumo {
+      color: #91959a;
+      font-size: 0.92rem;
+      letter-spacing: 0.3px;
+    }
+
+    .card__link {
+      margin-top: auto;
+      color: var(--azul-escuro);
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .campanha-card {
+      width: min(100%, 360px);
+      background: white;
+      box-shadow: var(--sombra);
+      margin-left: 0;
+    }
+
+    .video-fake {
+      aspect-ratio: 16 / 9;
+      background: radial-gradient(circle, #0e8de1, #002b67 65%, #03040a);
+      display: grid;
+      place-items: center;
+      color: white;
+      position: relative;
+    }
+
+    .play {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.75);
+      display: grid;
+      place-items: center;
+      background: rgba(0, 0, 0, 0.22);
+    }
+
+    .play::before {
+      content: "";
+      margin-left: 5px;
+      border-left: 19px solid white;
+      border-top: 12px solid transparent;
+      border-bottom: 12px solid transparent;
+    }
+
+    .campanha-card h3 {
+      padding: 18px 22px 22px;
+      font-size: 1.02rem;
+      font-weight: 500;
+      color: #4d4d54;
+      text-transform: uppercase;
+    }
+
+    .lista-projetos {
+      background: white;
+      border: var(--borda);
+      box-shadow: var(--sombra);
+      padding: 20px 28px;
+    }
+
+    .lista-projetos li {
+      list-style: none;
+      padding: 13px 0;
+      border-bottom: 1px solid #d7d7d7;
+      color: #007fff;
+      font-size: 1.04rem;
+      line-height: 1.35;
+    }
+
+    .lista-projetos li:last-child {
+      border-bottom: none;
+    }
+
+    .lista-projetos a:hover {
+      text-decoration: underline;
+    }
+
+    .rodape {
+      background: var(--rodape);
+      color: #dbe6ea;
+      padding: 66px 0 70px;
+    }
+
+    .rodape-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1.3fr;
+      gap: 72px;
+    }
+
+    .rodape h2,
+    .rodape h3 {
+      color: white;
+      margin-bottom: 24px;
+    }
+
+    .rodape .marca {
+      margin-bottom: 28px;
+      font-size: 1.45rem;
+    }
+
+    .rodape p,
+    .rodape li {
+      color: #c9d2d6;
+      font-size: 0.98rem;
+    }
+
+    .links-rodape {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px 38px;
+      list-style: none;
+    }
+
+    .links-rodape a:hover,
+    .contato a:hover {
+      color: white;
+      text-decoration: underline;
+    }
+
+    .contato {
+      list-style: none;
+      display: grid;
+      gap: 18px;
+    }
+
+    .contato li {
+      display: grid;
+      grid-template-columns: 26px 1fr;
+      gap: 14px;
+      align-items: start;
+      color: white;
+      font-weight: 700;
+    }
+
+    .barra-final {
+      background: #08aeea;
+      color: white;
+      text-align: center;
+      padding: 16px;
+      font-size: 0.85rem;
+    }
+
+    .voltar-topo {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 0;
+      background: var(--azul);
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.28);
+    }
+
+    @media (max-width: 1020px) {
+      .acesso-grid,
+      .cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .rodape-grid {
+        grid-template-columns: 1fr;
+        gap: 42px;
+      }
+    }
+
+    @media (max-width: 820px) {
+      .topo__conteudo {
+        min-height: 68px;
+      }
+
+      .botao-menu {
+        display: block;
+      }
+
+      .menu {
+        position: fixed;
+        inset: 68px 0 auto 0;
+        background: white;
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 10px 16px 18px;
+        box-shadow: var(--sombra);
+        border-bottom: var(--borda);
+      }
+
+      .menu.aberto {
+        display: flex;
+      }
+
+      .menu a,
+      .menu button {
+        width: 100%;
+        justify-content: space-between;
+        padding: 14px 10px;
+      }
+
+      .submenu {
+        position: static;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        box-shadow: none;
+        border: 0;
+        display: none;
+        padding-left: 16px;
+      }
+
+      .menu__item:hover .submenu,
+      .menu__item:focus-within .submenu {
+        display: block;
+      }
+
+      .hero {
+        min-height: 280px;
+      }
+
+      section {
+        padding: 54px 0;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .acesso-grid,
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .titulo-secao {
+        gap: 12px;
+        margin-bottom: 34px;
+      }
+
+      .marca {
+        letter-spacing: 3px;
+      }
+
+      .lista-projetos {
+        padding: 14px 18px;
+      }
+
+      .links-rodape {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topo" id="topo">
+    <div class="container topo__conteudo">
+      <a href="#topo" class="marca" aria-label="Página inicial do CMDCA">
+        <span class="marca__logo" aria-hidden="true"></span>
+        <span>C.M.D.C.A.</span>
+      </a>
+
+      <button class="botao-menu" type="button" aria-label="Abrir menu" aria-controls="menu-principal" aria-expanded="false">☰</button>
+
+      <nav aria-label="Menu principal">
+        <ul class="menu" id="menu-principal">
+          <li><a href="#topo">Início</a></li>
+          <li class="menu__item">
+            <button type="button">Comunicação <span>⌄</span></button>
+            <ul class="submenu">
+              <li><a href="#noticias">Últimas Notícias</a></li>
+              <li><a href="#campanhas">Campanhas</a></li>
+              <li><a href="#galeria">Galeria de Fotos</a></li>
+            </ul>
+          </li>
+          <li class="menu__item">
+            <button type="button">Institucional <span>⌄</span></button>
+            <ul class="submenu">
+              <li><a href="#sobre">Sobre o CMDCA</a></li>
+              <li><a href="#diretoria">Diretoria</a></li>
+              <li><a href="#composicao">Composição</a></li>
+            </ul>
+          </li>
+          <li class="menu__item">
+            <button type="button">Projetos <span>⌄</span></button>
+            <ul class="submenu">
+              <li><a href="#projetos">Projetos Aprovados</a></li>
+              <li><a href="#banco">Banco de Projetos</a></li>
+            </ul>
+          </li>
+          <li class="menu__item">
+            <button type="button">Documentos <span>⌄</span></button>
+            <ul class="submenu">
+              <li><a href="#documentos">Resoluções</a></li>
+              <li><a href="#documentos">Atas</a></li>
+              <li><a href="#documentos">Conferências</a></li>
+            </ul>
+          </li>
+          <li class="menu__item">
+            <button type="button">Conselho Tutelar <span>⌄</span></button>
+            <ul class="submenu">
+              <li><a href="#conselho">Informações</a></li>
+              <li><a href="#contato">Contato</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="titulo-hero">
+      <div class="container">
+        <h1 id="titulo-hero">Bem Vindo ao C.M.D.C.A</h1>
+        <p>Conselho Municipal dos Direitos à Criança e ao Adolescente</p>
+      </div>
+    </section>
+
+    <section id="acesso">
+      <div class="container">
+        <h2 class="titulo-secao">Acesso Rápido</h2>
+        <div class="acesso-grid">
+          <a class="atalho atalho--azul" href="projetos-aprovados.html">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3h6v6H4V3Zm10 0h6v6h-6V3ZM4 15h6v6H4v-6Zm10 0h6v6h-6v-6ZM6 11h12v2H6v-2Z"/></svg>
+            <strong>Projetos</strong><span>Aprovados</span>
+          </a>
+          <a class="atalho atalho--verde" href="conselho-tutelar.html">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a4 4 0 0 1 4 4c0 2.3-1.7 4-4 4S8 8.3 8 6a4 4 0 0 1 4-4Zm-7 18c.6-4.4 3.1-7 7-7s6.4 2.6 7 7H5Z"/></svg>
+            <strong>Conselho</strong><span>Tutelar</span>
+          </a>
+          <a class="atalho atalho--roxo" href="ultimas-noticias.html">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4V4Zm3 4v2h10V8H7Zm0 4v2h10v-2H7Zm0 4v2h7v-2H7Z"/></svg>
+            <strong>Últimas</strong><span>Notícias</span>
+          </a>
+          <a class="atalho atalho--azul2" href="galeria-de-fotos.html">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h4l2-2h4l2 2h4v15H4V5Zm8 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z"/></svg>
+            <strong>Galeria</strong><span>de Fotos</span>
+          </a>
+          <a class="atalho atalho--turquesa" href="entidades-registradas.html">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11a3 3 0 1 1 6 0v1h3l3 4-3 4H6l-3-4 3-4h3v-1Z"/></svg>
+            <strong>Entidades</strong><span>Registradas</span>
+          </a>
+          <a class="atalho atalho--laranja" href="conferencias-cmdca.html">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6V2Zm8 1.5V8h4.5L14 3.5ZM9 12h8v2H9v-2Zm0 4h8v2H9v-2Z"/></svg>
+            <strong>Conferências</strong><span>CMDCA</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="noticias">
+      <div class="container">
+        <h2 class="titulo-secao">Últimas Notícias</h2>
+        <div class="cards-grid">
+          <article class="card">
+            <div class="card__imagem card__imagem--foto1" role="img" aria-label="Imagem ilustrativa de notícia"></div>
+            <div class="card__conteudo">
+              <h3 class="card__titulo">Atendimento prioritário e políticas públicas para crianças e adolescentes</h3>
+              <p class="card__resumo">Informações e comunicados importantes do Conselho Municipal dos Direitos da Criança e do Adolescente.</p>
+              <a class="card__link" href="#">Ler mais</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card__imagem card__imagem--foto2" role="img" aria-label="Imagem ilustrativa de campanha"></div>
+            <div class="card__conteudo">
+              <h3 class="card__titulo">Quem não denuncia também violenta</h3>
+              <p class="card__resumo">Campanhas de conscientização e proteção dos direitos da criança e do adolescente.</p>
+              <a class="card__link" href="#">Ler mais</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card__imagem card__imagem--foto3" role="img" aria-label="Imagem ilustrativa de reunião"></div>
+            <div class="card__conteudo">
+              <h3 class="card__titulo">Reuniões, atas e deliberações do CMDCA</h3>
+              <p class="card__resumo">Acompanhe as principais decisões, documentos e publicações oficiais.</p>
+              <a class="card__link" href="#">Ler mais</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="campanhas">
+      <div class="container">
+        <h2 class="titulo-secao">Campanhas</h2>
+        <article class="campanha-card">
+          <div class="video-fake" aria-label="Vídeo da campanha">
+            <span class="play" aria-hidden="true"></span>
+          </div>
+          <h3>Campanha Leão Amigo da Criança</h3>
+        </article>
+      </div>
+    </section>
+
+    <section id="projetos">
+      <div class="container">
+        <h2 class="titulo-secao">Projetos</h2>
+        <div class="cards-grid">
+          <article class="card">
+            <div class="card__conteudo">
+              <h3 class="card__titulo">Projeto de reforma do Centro da Juventude - R$ 969.026,24 - aprovado pela Resolução CMDCA Nº 04/2026</h3>
+              <p class="card__resumo">À disposição para consulta pública.</p>
+              <a class="card__link" href="#">Ver projeto</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card__conteudo">
+              <h3 class="card__titulo">Projeto “Parcerias que Transformam – Instituto Zoe” - aprovado pela Ata CMDCA Nº 01/2026 - 27/02/2026 - R$ 120.000,00</h3>
+              <p class="card__resumo">O Instituto Zoe é uma organização social.</p>
+              <a class="card__link" href="#">Ver projeto</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card__conteudo">
+              <h3 class="card__titulo">Projeto Laranjeiras na PMPR; CONSEG - Valor do projeto: R$ 727.270,00; Aprovado pela Resolução CMDCA nº 09/2025</h3>
+              <p class="card__resumo">Objetivos específicos do projeto.</p>
+              <a class="card__link" href="#">Ver projeto</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="banco">
+      <div class="container">
+        <h2 class="titulo-secao">Banco de Projetos</h2>
+        <ul class="lista-projetos">
+          <li><a href="#">» PROJETO DE REFORMA DO CENTRO DA JUVENTUDE - R$ 969.026,24 - APROVADO PELA RESOLUÇÃO CMDCA Nº 04/2026</a></li>
+          <li><a href="#">» PROJETO “PARCERIAS QUE TRANSFORMAM – INSTITUTO ZOE” - APROVADO PELA ATA CMDCA Nº 01/2026 - 27/02/2026 - R$ 120.000,00</a></li>
+          <li><a href="#">» Projeto Laranjeiras na PMPR; CONSEG - Valor do projeto: R$ 727.270,00; Aprovado pela Resolução CMDCA nº 09/2025. OBS.: PROJETO JA ARRECADOU R$150.000,00</a></li>
+          <li><a href="#">» ATENDIMENTO PRIORITÁRIO E DIGNO PARA CRIANÇAS E ADOLESCENTES. INSTITUTO SÃO JOSÉ - VALOR DO PROJETO: R$ 170.890,32 - ATA CMDCA Nº 12/2024.</a></li>
+          <li><a href="#">» RAÍZES E VERSOS: CULTIVANDO SABEDORIA E SAÚDE FÍSICA E MENTAL NA HORTA ESCOLAR - APMF COLÉGIO FLORIANO PEIXOTO - R$ 100.000,00 - APROVADO PELA ATA Nº 10/2024</a></li>
+          <li><a href="#">» Projeto Acolhimento Institucional de Crianças e Adolescentes - Melhorias Campo de Futebol - S.O.S - RES CMDCA Nº 28/2024 - R$ 120.000,00</a></li>
+          <li><a href="#">» FUNDAÇÃO COLIBRI - Projeto Centro de Atendimento Especializado em Autismo - R$ 80.797,92 - Aprovado pelo CMDCA em 24/05/2024 - RES CMDCA Nº 22/2024</a></li>
+          <li><a href="#">» PROJETO SER E CONVIVER – APAE – VALOR R$ 460.000,00 – APRESENTADO EM 07-07-2023</a></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="rodape" id="contato">
+    <div class="container rodape-grid">
+      <div id="sobre">
+        <div class="marca"><span class="marca__logo" aria-hidden="true"></span><span>C.M.D.C.A.</span></div>
+        <p>O CMDCA – Conselho Municipal dos Direitos da Criança e do Adolescente é um órgão responsável pelas políticas públicas de defesa de direitos e promoção do bem estar social da criança e do adolescente no Município.</p>
+      </div>
+
+      <div>
+        <h3>Acesso Rápido</h3>
+        <ul class="links-rodape">
+          <li><a href="#noticias">Notícias</a></li>
+          <li><a href="#galeria">Galeria de Fotos</a></li>
+          <li><a href="#projetos">Projetos</a></li>
+          <li><a href="#conselho">Conselho Tutelar</a></li>
+          <li><a href="#composicao">Composição</a></li>
+          <li><a href="#diretoria">Diretoria</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>Contato</h3>
+        <ul class="contato">
+          <li><span>☎</span><a href="tel:+554236358120">(42) 3635 8120</a></li>
+          <li><span>✉</span><a href="mailto:asocial@ls.pr.gov.br">asocial@ls.pr.gov.br</a></li>
+          <li><span>📍</span><span>Rua Barão do Rio Branco, nº 3170 – Bairro São Francisco CEP: 85303-130<br />Laranjeiras do Sul - PR</span></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <div class="barra-final">Desenvolvimento: versão otimizada</div>
+  <button class="voltar-topo" type="button" aria-label="Voltar ao topo">⌃</button>
+
+  <script>
+    const botaoMenu = document.querySelector('.botao-menu');
+    const menu = document.querySelector('#menu-principal');
+    const voltarTopo = document.querySelector('.voltar-topo');
+
+    botaoMenu.addEventListener('click', () => {
+      const aberto = menu.classList.toggle('aberto');
+      botaoMenu.setAttribute('aria-expanded', aberto ? 'true' : 'false');
+      botaoMenu.textContent = aberto ? '×' : '☰';
+    });
+
+    menu.addEventListener('click', (evento) => {
+      if (evento.target.tagName === 'A') {
+        menu.classList.remove('aberto');
+        botaoMenu.setAttribute('aria-expanded', 'false');
+        botaoMenu.textContent = '☰';
+      }
+    });
+
+    voltarTopo.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>
